@@ -1,12 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="純前端實時時鐘">
+  <title>實時時鐘</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    Testing web site
+  <main class="app">
+    <section class="clock" aria-label="目前時間">
+      <div class="clock__time" role="timer" aria-live="off">
+        <span class="clock__digit" id="hours">00</span>
+        <span class="clock__colon">:</span>
+        <span class="clock__digit" id="minutes">00</span>
+        <span class="clock__colon">:</span>
+        <span class="clock__digit clock__digit--sec" id="seconds">00</span>
+        <span class="clock__suffix" id="suffix"></span>
+      </div>
+
+      <hr class="clock__divider">
+
+      <p class="clock__date" id="date">—</p>
+      <p class="clock__zone" id="zone">—</p>
+    </section>
+
+    <div class="controls">
+      <button class="btn" id="formatBtn" type="button" aria-pressed="false">12 小時制</button>
+      <button class="btn btn--icon" id="themeBtn" type="button" aria-label="切換主題">☀️</button>
+    </div>
+  </main>
+
+  <noscript><p class="noscript">此頁需要啟用 JavaScript 才能顯示時間。</p></noscript>
+
+  <script src="script.js"></script>
 </body>
 </html>

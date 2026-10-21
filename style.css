@@ -1,0 +1,175 @@
+/* ==================== 設計變數（深色為預設） ==================== */
+:root {
+  --bg-1: #1b2450;
+  --bg-2: #06080f;
+  --surface: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: #eef2ff;
+  --muted: #8b95b8;
+  --accent: #4cc9f0;
+  --glow: rgba(76, 201, 240, 0.35);
+  --radius: 24px;
+  --shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.85);
+}
+
+:root[data-theme="light"] {
+  --bg-1: #ffffff;
+  --bg-2: #dbe4ff;
+  --surface: rgba(255, 255, 255, 0.8);
+  --border: rgba(15, 23, 42, 0.1);
+  --text: #0f172a;
+  --muted: #5b6479;
+  --accent: #2563eb;
+  --glow: rgba(37, 99, 235, 0.25);
+  --shadow: 0 30px 80px -30px rgba(15, 23, 42, 0.35);
+}
+
+/* ==================== 版面 ==================== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: radial-gradient(circle at 50% 0%, var(--bg-1) 0%, var(--bg-2) 65%);
+  color: var(--text);
+  font-family: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+  transition: color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  width: min(100%, 40rem);
+}
+
+/* ==================== 時鐘卡片 ==================== */
+.clock {
+  width: 100%;
+  text-align: center;
+  padding: clamp(1.75rem, 5vw, 3rem) clamp(1.25rem, 5vw, 3.5rem);
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.clock__time {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.04em;
+  font-size: clamp(2.5rem, 13vw, 6.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  /* 關鍵：等寬數字，秒數跳動時版面不會左右抖動 */
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.clock__digit { white-space: nowrap; }
+
+.clock__digit--sec {
+  font-size: 0.58em;
+  color: var(--accent);
+  text-shadow: 0 0 24px var(--glow);
+}
+
+.clock__colon {
+  color: var(--muted);
+  transition: opacity 0.12s linear;
+}
+
+.clock__colon.is-dim { opacity: 0.22; }
+
+.clock__suffix {
+  font-size: 0.32em;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-left: 0.5em;
+}
+
+.clock__suffix:empty { display: none; }
+
+.clock__divider {
+  border: 0;
+  height: 1px;
+  margin: clamp(1rem, 3vw, 1.5rem) 0;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+.clock__date {
+  margin: 0 0 0.4rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  letter-spacing: 0.04em;
+}
+
+.clock__zone {
+  margin: 0;
+  font-size: clamp(0.68rem, 2vw, 0.8rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ==================== 按鈕 ==================== */
+.controls {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--text);
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.btn:hover { border-color: var(--accent); }
+.btn:active { transform: scale(0.96); }
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.btn[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn--icon { padding: 0.6rem 0.8rem; }
+
+/* ==================== 其他 ==================== */
+.noscript {
+  position: fixed;
+  inset: auto 1rem 1rem;
+  text-align: center;
+  color: #fca5a5;
+}
+
+/* 尊重「減少動態效果」系統設定 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
